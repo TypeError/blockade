@@ -1,0 +1,16 @@
+{
+  "name": "blockade",
+  "version": "1.0.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cakinney/blockade"
+  },
+  "description": "Security Headers for Node.js",
+  "main": "lib/bloackade.js",
+  "types": "lib/blockade.d.ts",
+  "scripts": {
+    "build": "tsc"
+  },
+  "author": "Caleb Kinney",
+  "license": "MIT"
+}
