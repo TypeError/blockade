@@ -307,7 +307,7 @@ export class Feature {
     return this;
   }
 
-  ambient_light_sensor(...allowlist: string[]) {
+  ambientLightSensor(...allowlist: string[]) {
     this.policy.push({
       directive: "ambient-light-sensor ",
       sources: allowlist
@@ -325,12 +325,12 @@ export class Feature {
     return this;
   }
 
-  document_domain(...allowlist: string[]) {
+  documentDomain(...allowlist: string[]) {
     this.policy.push({ directive: "document-domain", sources: allowlist });
     return this;
   }
 
-  encrypted_media(...allowlist: string[]) {
+  encryptedMedia(...allowlist: string[]) {
     this.policy.push({ directive: "encrypted-media", sources: allowlist });
     return this;
   }
@@ -370,7 +370,7 @@ export class Feature {
     return this;
   }
 
-  picture_in_picture(...allowlist: string[]) {
+  pictureInPicture(...allowlist: string[]) {
     this.policy.push({ directive: "picture-in-picture", sources: allowlist });
     return this;
   }
@@ -380,7 +380,7 @@ export class Feature {
     return this;
   }
 
-  sync_xhr(...allowlist: string[]) {
+  syncXhr(...allowlist: string[]) {
     this.policy.push({ directive: "sync-xhr", sources: allowlist });
     return this;
   }
@@ -401,17 +401,7 @@ export class Feature {
   }
 }
 
-export function get_policy(policy: headerPolicySingle, separator: string) {
-  let value: string;
-  if (Array.isArray(policy.policy)) {
-    value = policy.policy.join(separator);
-  } else {
-    value = policy.policy;
-  }
-  return value;
-}
-
-export const PolicyValues = {
+export const values = {
   all: "*",
   none: "'none'",
   self: "'self'",
@@ -421,7 +411,7 @@ export const PolicyValues = {
   unsafeInline: "'unsafe-inline'"
 };
 
-export const Seconds = {
+export const seconds = {
   fiveMinutes: "300",
   oneWeek: "604800",
   oneMonth: "2592000",
