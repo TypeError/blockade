@@ -1,5 +1,4 @@
 export class CSP {
-  type = "CSP";
   policy: headerOptions[] = [];
 
   baseUri(...sources: string[]) {
@@ -106,10 +105,14 @@ export class CSP {
     this.policy.push({ directive: "worker-src", sources: sources });
     return this;
   }
+
+  get value() {
+    const headerValue = getPolicyMultiOpt(this.policy);
+    return headerValue;
+  }
 }
 
 export class XFO {
-  type = "XFO";
   policy: string = "";
 
   allowFrom(uri: string) {
@@ -126,10 +129,14 @@ export class XFO {
     this.policy = "sameorigin";
     return this;
   }
+
+  get value() {
+    const headerValue = this.policy;
+    return headerValue;
+  }
 }
 
 export class XXP {
-  type = "XXP";
   policy: string = "";
 
   disabled() {
@@ -150,6 +157,11 @@ export class XXP {
   enabledReport(uri: string) {
     this.policy = `1; report=${uri}`;
     return this;
+  }
+
+  get value() {
+    const headerValue = this.policy;
+    return headerValue;
   }
 }
 
@@ -196,10 +208,14 @@ export class Referrer {
     this.policy.push("unsafe-url");
     return this;
   }
+
+  get value() {
+    const headerValue = getPolicy(this.policy, ", ");
+    return headerValue;
+  }
 }
 
 export class HSTS {
-  type = "HSTS";
   policy: string[] = [];
 
   includeSubdomains() {
@@ -216,10 +232,14 @@ export class HSTS {
     this.policy.push("preload");
     return this;
   }
+
+  get value() {
+    const headerValue = getPolicy(this.policy, "; ");
+    return headerValue;
+  }
 }
 
 export class Cache {
-  type = "Cache";
   policy: string[] = [];
 
   immutable() {
@@ -296,10 +316,14 @@ export class Cache {
     this.policy.push(`stale-while-revalidate=${seconds}`);
     return this;
   }
+
+  get value() {
+    const headerValue = getPolicy(this.policy, ", ");
+    return headerValue;
+  }
 }
 
 export class Feature {
-  type = "Feature";
   policy: headerOptions[] = [];
 
   accelerometer(...allowlist: string[]) {
@@ -399,6 +423,11 @@ export class Feature {
     this.policy.push({ directive: "vr", sources: allowlist });
     return this;
   }
+
+  get value() {
+    const headerValue = getPolicyMultiOpt(this.policy);
+    return headerValue;
+  }
 }
 
 export const values = {
@@ -419,10 +448,10 @@ export const seconds = {
   twoYears: "63072000"
 };
 
-export function getPolicyMultiOpt(policy: headerPolicy) {
+function getPolicyMultiOpt(policy: headerOptions[]) {
   const values: string[] = [];
   let resouces: string | object;
-  for (let option of policy.policy) {
+  for (let option of policy) {
     if (option.sources) {
       if (Array.isArray(option.sources)) {
         resouces = option.sources.join(" ");
@@ -437,12 +466,12 @@ export function getPolicyMultiOpt(policy: headerPolicy) {
   return values.join("; ");
 }
 
-export function getPolicy(policy: headerPolicy, separator: string) {
+function getPolicy(policy: string[], separator: string) {
   let value: string;
-  if (Array.isArray(policy.policy)) {
-    value = policy.policy.join(separator);
+  if (Array.isArray(policy)) {
+    value = policy.join(separator);
   } else {
-    value = policy.policy;
+    value = policy;
   }
   return value;
 }
@@ -450,14 +479,4 @@ export function getPolicy(policy: headerPolicy, separator: string) {
 interface headerOptions {
   directive: string;
   sources?: string[] | string | object;
-}
-
-interface headerPolicy {
-  type: string;
-  policy: headerOptions[];
-}
-
-interface headerPolicySingle {
-  type: string;
-  policy: headerOptions[] | string;
 }
