@@ -6,6 +6,11 @@ export class SecureHeaders {
     this.options = options;
   }
 
+  headers() {
+    const headers = headerObject(this.options);
+    return headers;
+  }
+
   express(res: any) {
     const headers = headerObject(this.options);
     res.set(headers);
