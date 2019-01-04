@@ -1,4 +1,6 @@
 export { SecureHeaders } from "./framework-headers";
+export { SecureCookie } from "./framework-cookie";
+export { SameSite } from "./cookie";
 export {
   CSP,
   Cache,
