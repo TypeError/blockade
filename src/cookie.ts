@@ -1,4 +1,4 @@
-import { secureCookieOptions, parseOptions } from "./utils";
+import { secureCookieOptions, parseCookieOptions } from "./utils";
 
 export enum SameSite {
   Lax = "lax",
@@ -12,7 +12,7 @@ export class Cookie {
   }
 
   secureCookie(options: secureCookieOptions) {
-    options = parseOptions("cookie", options);
+    options = parseCookieOptions(options);
     let cookie_value: string;
     cookie_value = `${this.value}; Path=${options.path}`;
     if (options.secure) {

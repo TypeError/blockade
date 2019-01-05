@@ -1,4 +1,4 @@
-import { secureCookieOptions, parseOptions } from "./utils";
+import { secureCookieOptions, parseCookieOptions } from "./utils";
 
 export class SecureCookie {
   options: secureCookieOptions;
@@ -7,7 +7,7 @@ export class SecureCookie {
   }
 
   express(res: any, name: string, value: string) {
-    const options: secureCookieOptions = parseOptions("cookie", this.options);
+    const options: secureCookieOptions = parseCookieOptions(this.options);
     const expressCookieOptions: ExpressCookie = {
       httpOnly: options.httpOnly,
       path: options.path,
@@ -25,7 +25,7 @@ export class SecureCookie {
   }
 
   hapi(h: any, name: string, value: string) {
-    const options: secureCookieOptions = parseOptions("cookie", this.options);
+    const options: secureCookieOptions = parseCookieOptions(this.options);
     const hapiCookieOptions: HapiCookie = {
       isSecure: options.secure,
       isHttpOnly: options.httpOnly,
@@ -42,7 +42,7 @@ export class SecureCookie {
   }
 
   koa(ctx: any, name: string, value: string) {
-    const options: secureCookieOptions = parseOptions("cookie", this.options);
+    const options: secureCookieOptions = parseCookieOptions(this.options);
     const koaCookieOptions: KoaCookie = {
       sameSite: options.sameSite,
       path: options.path,

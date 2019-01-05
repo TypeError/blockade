@@ -1,4 +1,4 @@
-import { secureHeadersOptions } from "./framework-headers";
+import { secureHeadersOptions, parseHeaderOptions } from "./utils";
 
 export class HTTPHeaders {
   header: string;
@@ -76,7 +76,7 @@ export class SecurityHeaders {
 
   static secureHeaders(options: secureHeadersOptions) {
     let headers: Array<HTTPHeaders> = [];
-    options = parseOptions(options);
+    options = parseHeaderOptions(options);
 
     if (options.server) {
       if (typeof options.server == "string") {
@@ -146,28 +146,6 @@ export class SecurityHeaders {
 
     return headers;
   }
-}
-
-export function parseOptions(options: secureHeadersOptions) {
-  let defaultOptions: secureHeadersOptions = {
-    server: false,
-    hsts: true,
-    xfo: true,
-    xxp: true,
-    content: true,
-    csp: false,
-    referrer: true,
-    cache: true,
-    feature: false
-  };
-
-  for (let property in options) {
-    if (options.hasOwnProperty(property)) {
-      defaultOptions[property] = options[property];
-    }
-  }
-
-  return defaultOptions;
 }
 
 export function headerObject(options: secureHeadersOptions) {

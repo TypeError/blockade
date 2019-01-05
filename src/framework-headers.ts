@@ -1,4 +1,5 @@
 import { headerObject, headerObj, setHeaderTuple } from "./headers";
+import { secureHeadersOptions } from "./utils";
 
 export class SecureHeaders {
   options: secureHeadersOptions;
@@ -24,17 +25,4 @@ export class SecureHeaders {
     const headers = headerObject(this.options);
     ctx.set(headers);
   }
-}
-
-export interface secureHeadersOptions {
-  server?: boolean | string;
-  hsts?: boolean | string;
-  xfo?: boolean | string;
-  xxp?: boolean | string;
-  content?: boolean | string;
-  csp?: boolean | string;
-  referrer?: boolean | string;
-  cache?: boolean | string;
-  feature?: boolean | string;
-  [key: string]: boolean | string | undefined;
 }

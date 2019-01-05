@@ -42,18 +42,21 @@ const headerOptions: secureHeadersOptions = {
   feature: false
 };
 
-export function parseOptions(type: string, options: secureCookieOptions) {
-  let defaultOptions: secureHeadersOptions | secureCookieOptions = {};
-  if (type === "cookie") {
-    defaultOptions = cookieOptions;
-  } else if (type === "header") {
-    defaultOptions = headerOptions;
-  }
+export function parseHeaderOptions(options: secureHeadersOptions) {
+  const defaultOptions = headerOptions;
   for (let property in options) {
     if (options.hasOwnProperty(property)) {
       defaultOptions[property] = options[property];
     }
   }
-
+  return defaultOptions;
+}
+export function parseCookieOptions(options: secureCookieOptions) {
+  const defaultOptions: secureCookieOptions = cookieOptions;
+  for (let property in options) {
+    if (options.hasOwnProperty(property)) {
+      defaultOptions[property] = options[property];
+    }
+  }
   return defaultOptions;
 }
