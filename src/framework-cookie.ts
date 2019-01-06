@@ -1,4 +1,5 @@
 import { secureCookieOptions, parseCookieOptions } from "./utils";
+import { setCommonCookie } from "./cookie";
 
 export class SecureCookie {
   options: secureCookieOptions;
@@ -7,21 +8,7 @@ export class SecureCookie {
   }
 
   express(res: any, name: string, value: string) {
-    const options: secureCookieOptions = parseCookieOptions(this.options);
-    const expressCookieOptions: ExpressCookie = {
-      httpOnly: options.httpOnly,
-      path: options.path,
-      secure: options.secure,
-      sameSite: options.sameSite
-    };
-    if (options.expires) {
-      if (typeof options.expires == "number") {
-        const expireDate = new Date();
-        expireDate.setHours(expireDate.getHours() + options.expires);
-        expressCookieOptions.expires = expireDate;
-      }
-    }
-    res.cookie(name, value, expressCookieOptions);
+    setCommonCookie(res, name, value, this.options);
   }
 
   hapi(h: any, name: string, value: string) {
@@ -59,9 +46,13 @@ export class SecureCookie {
       ctx.cookies.set(name, value, koaCookieOptions);
     }
   }
+
+  sails(res: any, name: string, value: string) {
+    setCommonCookie(res, name, value, this.options);
+  }
 }
 
-interface ExpressCookie {
+export interface ExpressCookie {
   expires?: Date;
   httpOnly?: boolean;
   path?: string;
@@ -85,5 +76,14 @@ interface KoaCookie {
   path?: string;
   secure?: boolean;
   httpOnly?: boolean;
+  [key: string]: boolean | string | undefined | Date;
+}
+
+export interface SailsCookie {
+  expires?: Date;
+  httpOnly?: boolean;
+  path?: string;
+  secure?: boolean;
+  sameSite?: boolean | string;
   [key: string]: boolean | string | undefined | Date;
 }

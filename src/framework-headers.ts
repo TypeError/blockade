@@ -1,4 +1,9 @@
-import { headerObject, headerObj, setHeaderTuple } from "./headers";
+import {
+  headerObject,
+  headerObj,
+  setHeaderTuple,
+  setCommonHeader
+} from "./headers";
 import { secureHeadersOptions } from "./utils";
 
 export class SecureHeaders {
@@ -13,8 +18,7 @@ export class SecureHeaders {
   }
 
   express(res: any) {
-    const headers = headerObject(this.options);
-    res.set(headers);
+    setCommonHeader(res, this.options);
   }
 
   hapi(response: any) {
@@ -24,5 +28,9 @@ export class SecureHeaders {
   koa(ctx: any) {
     const headers = headerObject(this.options);
     ctx.set(headers);
+  }
+
+  sails(res: any) {
+    setCommonHeader(res, this.options);
   }
 }

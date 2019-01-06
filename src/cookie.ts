@@ -1,5 +1,5 @@
 import { secureCookieOptions, parseCookieOptions } from "./utils";
-import { ExpressCookie, KoaCookie, SailsCookie } from "./framework-cookie";
+import { ExpressCookie, SailsCookie } from "./framework-cookie";
 
 export enum SameSite {
   Lax = "lax",
