@@ -157,6 +157,11 @@ export function headerObject(options: secureHeadersOptions) {
   return secureHeaders;
 }
 
+export function setCommonHeader(res: any, options: secureHeadersOptions) {
+  const headers = headerObject(options);
+  res.set(headers);
+}
+
 export function setHeaderTuple(response: any, options: secureHeadersOptions) {
   const headers = SecurityHeaders.secureHeaders(options);
   for (let header of headers) {

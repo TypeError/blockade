@@ -43,7 +43,7 @@ const headerOptions: secureHeadersOptions = {
 };
 
 export function parseHeaderOptions(options: secureHeadersOptions) {
-  const defaultOptions = headerOptions;
+  const defaultOptions: secureHeadersOptions = headerOptions;
   for (let property in options) {
     if (options.hasOwnProperty(property)) {
       defaultOptions[property] = options[property];

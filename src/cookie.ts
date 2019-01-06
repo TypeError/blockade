@@ -1,4 +1,5 @@
 import { secureCookieOptions, parseCookieOptions } from "./utils";
+import { ExpressCookie, KoaCookie, SailsCookie } from "./framework-cookie";
 
 export enum SameSite {
   Lax = "lax",
@@ -44,4 +45,27 @@ function cookieExpiration(hours: number, dateObject: boolean = false) {
     returnObject = expire_time;
   }
   return returnObject;
+}
+
+export function setCommonCookie(
+  res: any,
+  name: string,
+  value: string,
+  options: secureCookieOptions
+) {
+  options = parseCookieOptions(options);
+  const expressCookieOptions: ExpressCookie | SailsCookie = {
+    httpOnly: options.httpOnly,
+    path: options.path,
+    secure: options.secure,
+    sameSite: options.sameSite
+  };
+  if (options.expires) {
+    if (typeof options.expires == "number") {
+      const expireDate = new Date();
+      expireDate.setHours(expireDate.getHours() + options.expires);
+      expressCookieOptions.expires = expireDate;
+    }
+  }
+  res.cookie(name, value, expressCookieOptions);
 }
