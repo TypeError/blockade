@@ -1,5 +1,5 @@
 import { secureCookieOptions, parseCookieOptions } from "./utils";
-import { ExpressCookie, SailsCookie } from "./framework-cookie";
+import { CommonCookie } from "./framework-cookie";
 
 export enum SameSite {
   Lax = "lax",
@@ -54,7 +54,7 @@ export function setCommonCookie(
   options: secureCookieOptions
 ) {
   options = parseCookieOptions(options);
-  const expressCookieOptions: ExpressCookie | SailsCookie = {
+  const expressCookieOptions: CommonCookie = {
     httpOnly: options.httpOnly,
     path: options.path,
     secure: options.secure,
