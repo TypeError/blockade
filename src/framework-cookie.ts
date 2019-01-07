@@ -30,7 +30,7 @@ export class SecureCookie {
 
   koa(ctx: any, name: string, value: string) {
     const options: secureCookieOptions = parseCookieOptions(this.options);
-    const koaCookieOptions: KoaCookie = {
+    const koaCookieOptions: CommonCookie = {
       sameSite: options.sameSite,
       path: options.path,
       secure: options.secure,
@@ -47,12 +47,16 @@ export class SecureCookie {
     }
   }
 
+  nest(res: any, name: string, value: string) {
+    setCommonCookie(res, name, value, this.options);
+  }
+
   sails(res: any, name: string, value: string) {
     setCommonCookie(res, name, value, this.options);
   }
 }
 
-export interface ExpressCookie {
+export interface CommonCookie {
   expires?: Date;
   httpOnly?: boolean;
   path?: string;
@@ -68,22 +72,4 @@ interface HapiCookie {
   path?: string;
   ttl?: number;
   [key: string]: boolean | string | undefined | number;
-}
-
-interface KoaCookie {
-  sameSite?: string | boolean;
-  expires?: Date | boolean;
-  path?: string;
-  secure?: boolean;
-  httpOnly?: boolean;
-  [key: string]: boolean | string | undefined | Date;
-}
-
-export interface SailsCookie {
-  expires?: Date;
-  httpOnly?: boolean;
-  path?: string;
-  secure?: boolean;
-  sameSite?: boolean | string;
-  [key: string]: boolean | string | undefined | Date;
 }
