@@ -30,6 +30,10 @@ export class SecureHeaders {
     ctx.set(headers);
   }
 
+  nest(res: any) {
+    setCommonHeader(res, this.options);
+  }
+
   sails(res: any) {
     setCommonHeader(res, this.options);
   }
