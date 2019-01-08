@@ -169,6 +169,13 @@ export function setHeaderTuple(response: any, options: secureHeadersOptions) {
   }
 }
 
+export function setHeader(res: any, options: secureHeadersOptions) {
+  const headers = SecurityHeaders.secureHeaders(options);
+  for (let header of headers) {
+    res.setHeader(header.header, header.value);
+  }
+}
+
 export interface headerObj {
   Server?: string;
   "Strict-Transport-Security"?: string;

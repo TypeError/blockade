@@ -2,7 +2,8 @@ import {
   headerObject,
   headerObj,
   setHeaderTuple,
-  setCommonHeader
+  setCommonHeader,
+  setHeader
 } from "./headers";
 import { secureHeadersOptions } from "./utils";
 
@@ -28,6 +29,10 @@ export class SecureHeaders {
   koa(ctx: any) {
     const headers = headerObject(this.options);
     ctx.set(headers);
+  }
+
+  meteor(res: any) {
+    setHeader(res, this.options);
   }
 
   nest(res: any) {
