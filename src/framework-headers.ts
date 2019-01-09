@@ -18,6 +18,10 @@ export class SecureHeaders {
     return headers;
   }
 
+  adonis(response: any) {
+    setHeaderTuple(response, this.options);
+  }
+
   express(res: any) {
     setCommonHeader(res, this.options);
   }

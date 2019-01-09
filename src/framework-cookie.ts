@@ -7,6 +7,10 @@ export class SecureCookie {
     this.options = options;
   }
 
+  adonis(response: any, name: string, value: string) {
+    setCommonCookie(response, name, value, this.options);
+  }
+
   express(res: any, name: string, value: string) {
     setCommonCookie(res, name, value, this.options);
   }
