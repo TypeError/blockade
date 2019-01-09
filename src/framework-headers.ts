@@ -46,4 +46,8 @@ export class SecureHeaders {
   sails(res: any) {
     setCommonHeader(res, this.options);
   }
+
+  total(res: any) {
+    setHeaderTuple(res, this.options);
+  }
 }

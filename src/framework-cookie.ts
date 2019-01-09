@@ -58,6 +58,10 @@ export class SecureCookie {
   sails(res: any, name: string, value: string) {
     setCommonCookie(res, name, value, this.options);
   }
+
+  total(res: any, name: string, value: string) {
+    setCommonCookie(res, name, value, this.options);
+  }
 }
 
 export interface CommonCookie {
