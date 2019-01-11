@@ -1,11 +1,11 @@
 {
   "name": "blockade",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "repository": {
     "type": "git",
-    "url": "https://github.com/cakinney/blockade"
+    "url": "https://github.com/TypeError/blockade"
   },
-  "description": "Security Headers for Node.js",
+  "description": "Security Headers and Cookies for Node.js",
   "main": "lib/blockade.js",
   "types": "lib/blockade.d.ts",
   "scripts": {
