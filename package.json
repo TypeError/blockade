@@ -1,6 +1,6 @@
 {
   "name": "blockade",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "repository": {
     "type": "git",
     "url": "https://github.com/TypeError/blockade"
@@ -8,9 +8,13 @@
   "description": "Security Headers and Cookies for Node.js",
   "main": "lib/blockade.js",
   "types": "lib/blockade.d.ts",
+  "files": [
+    "/lib"
+  ],
   "scripts": {
     "build": "tsc"
   },
   "author": "Caleb Kinney",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {}
 }
