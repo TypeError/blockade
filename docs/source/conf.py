@@ -19,7 +19,7 @@
 
 # -- Project information -----------------------------------------------------
 
-project = 'blockade'
+project = 'blockadejs'
 copyright = '2019, Caleb Kinney'
 author = 'Caleb Kinney'
 
