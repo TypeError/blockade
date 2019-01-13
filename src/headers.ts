@@ -1,6 +1,6 @@
 import { secureHeadersOptions, parseHeaderOptions } from "./utils";
 
-export class HTTPHeaders {
+class HTTPHeader {
   header: string;
   value: string;
   info: string;
@@ -12,70 +12,70 @@ export class HTTPHeaders {
 }
 
 export class SecurityHeaders {
-  static server = new HTTPHeaders("Server", "NULL");
+  static server = new HTTPHeader("Server", "NULL");
 
-  static httpStrictTransportSecurity = new HTTPHeaders(
+  static httpStrictTransportSecurity = new HTTPHeader(
     "Strict-Transport-Security",
     "max-age=63072000; includeSubdomains",
     "Ensure application communication is sent over HTTPS"
   );
 
-  static xFrameOptions = new HTTPHeaders(
+  static xFrameOptions = new HTTPHeader(
     "X-Frame-Options",
     "SAMEORIGIN",
     "Disable framing from different origins (clickjacking defense)"
   );
 
-  static xXssProtection = new HTTPHeaders(
+  static xXssProtection = new HTTPHeader(
     "X-XSS-Protection",
     "1; mode=block",
     "Enable Cross-Site Scripting filters"
   );
 
-  static xContentTypeOptions = new HTTPHeaders(
+  static xContentTypeOptions = new HTTPHeader(
     "X-Content-Type-Options",
     "nosniff",
     "Prevent MIME-sniffing"
   );
 
-  static contentSecurityPolicy = new HTTPHeaders(
+  static contentSecurityPolicy = new HTTPHeader(
     "Content-Security-Policy",
     "script-src 'self'; object-src 'self'",
     "Prevent Cross-site injections"
   );
 
-  static referrerPolicy = new HTTPHeaders(
+  static referrerPolicy = new HTTPHeader(
     "Referrer-Policy",
     "no-referrer, strict-origin-when-cross-origin",
     "Enable full referrer if same origin, remove path for cross origin and disable referrer in unsupported browsers"
   );
 
-  static cacheControl = new HTTPHeaders(
+  static cacheControl = new HTTPHeader(
     "Cache-control",
     "no-cache, no-store, must-revalidate, max-age=0",
     "Prevent cacheable HTTPS response"
   );
 
-  static pragma = new HTTPHeaders(
+  static pragma = new HTTPHeader(
     "Pragma",
     "no-cache",
     "Prevent cacheable HTTPS response"
   );
 
-  static expires = new HTTPHeaders(
+  static expires = new HTTPHeader(
     "Expires",
     "0",
     "Prevent cacheable HTTPS response"
   );
 
-  static featurePolicy = new HTTPHeaders(
+  static featurePolicy = new HTTPHeader(
     "Feature-Policy",
     "accelerometer 'none'; ambient-light-sensor 'none'; autoplay 'none'; camera 'none'; encrypted-media 'none'; fullscreen 'none'; geolocation 'none'; gyroscope 'none'; magnetometer 'none'; microphone 'none'; midi 'none'; payment 'none'; picture-in-picture 'none'; speaker 'none'; sync-xhr 'none'; usb 'none'; vr 'none'",
     "Disable browser features and APIs"
   );
 
   static secureHeaders(options: secureHeadersOptions) {
-    let headers: Array<HTTPHeaders> = [];
+    let headers: Array<HTTPHeader> = [];
     options = parseHeaderOptions(options);
 
     if (options.server) {
