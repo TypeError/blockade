@@ -1,5 +1,5 @@
 export class CSP {
-  policy: headerOptions[] = [];
+  policy: HeaderOptions[] = [];
 
   baseUri(...sources: string[]) {
     this.policy.push({ directive: "base-uri", sources: sources });
@@ -324,7 +324,7 @@ export class Cache {
 }
 
 export class Feature {
-  policy: headerOptions[] = [];
+  policy: HeaderOptions[] = [];
 
   accelerometer(...allowlist: string[]) {
     this.policy.push({ directive: "accelerometer", sources: allowlist });
@@ -448,7 +448,7 @@ export const seconds = {
   twoYears: "63072000"
 };
 
-function getPolicyMultiOpt(policy: headerOptions[]) {
+function getPolicyMultiOpt(policy: HeaderOptions[]) {
   const values: string[] = [];
   let resouces: string | object;
   for (let option of policy) {
@@ -476,7 +476,7 @@ function getPolicy(policy: string[], separator: string) {
   return value;
 }
 
-interface headerOptions {
+interface HeaderOptions {
   directive: string;
   sources?: string[] | string | object;
 }

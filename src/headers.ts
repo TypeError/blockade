@@ -1,4 +1,4 @@
-import { secureHeadersOptions, parseHeaderOptions } from "./utils";
+import { SecureHeadersOptions, parseHeaderOptions } from "./utils";
 
 class HTTPHeader {
   header: string;
@@ -74,7 +74,7 @@ export class SecurityHeaders {
     "Disable browser features and APIs"
   );
 
-  static secureHeaders(options: secureHeadersOptions) {
+  static secureHeaders(options: SecureHeadersOptions) {
     let headers: Array<HTTPHeader> = [];
     options = parseHeaderOptions(options);
 
@@ -148,35 +148,35 @@ export class SecurityHeaders {
   }
 }
 
-export function headerObject(options: secureHeadersOptions) {
+export function headerObject(options: SecureHeadersOptions) {
   const headers = SecurityHeaders.secureHeaders(options);
-  let secureHeaders: headerObj = {};
+  let secureHeaders: Headers = {};
   for (let header of headers) {
     secureHeaders[header.header] = header.value;
   }
   return secureHeaders;
 }
 
-export function setCommonHeader(res: any, options: secureHeadersOptions) {
+export function setCommonHeader(res: any, options: SecureHeadersOptions) {
   const headers = headerObject(options);
   res.set(headers);
 }
 
-export function setHeaderTuple(response: any, options: secureHeadersOptions) {
+export function setHeaderTuple(response: any, options: SecureHeadersOptions) {
   const headers = SecurityHeaders.secureHeaders(options);
   for (let header of headers) {
     response.header(header.header, header.value);
   }
 }
 
-export function setHeader(res: any, options: secureHeadersOptions) {
+export function setHeader(res: any, options: SecureHeadersOptions) {
   const headers = SecurityHeaders.secureHeaders(options);
   for (let header of headers) {
     res.setHeader(header.header, header.value);
   }
 }
 
-export interface headerObj {
+export interface Headers {
   Server?: string;
   "Strict-Transport-Security"?: string;
   "X-Frame-Options"?: string;

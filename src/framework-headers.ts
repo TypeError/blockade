@@ -1,15 +1,15 @@
 import {
   headerObject,
-  headerObj,
+  Headers,
   setHeaderTuple,
   setCommonHeader,
   setHeader
 } from "./headers";
-import { secureHeadersOptions } from "./utils";
+import { SecureHeadersOptions } from "./utils";
 
 export class SecureHeaders {
-  options: secureHeadersOptions;
-  constructor(options: secureHeadersOptions) {
+  options: SecureHeadersOptions;
+  constructor(options: SecureHeadersOptions) {
     this.options = options;
   }
 
