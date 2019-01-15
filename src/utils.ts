@@ -1,15 +1,13 @@
-import { SameSite } from "./cookie";
-
-export interface secureCookieOptions {
+export interface SecureCookieOptions {
   path?: string;
   secure?: boolean;
   httpOnly?: boolean;
-  sameSite?: SameSite | boolean;
+  sameSite?: SameSite;
   expires?: boolean | number;
   [key: string]: boolean | string | undefined | number | SameSite;
 }
 
-export interface secureHeadersOptions {
+export interface SecureHeadersOptions {
   server?: boolean | string;
   hsts?: boolean | string;
   xfo?: boolean | string;
@@ -22,15 +20,15 @@ export interface secureHeadersOptions {
   [key: string]: boolean | string | undefined;
 }
 
-const cookieOptions: secureCookieOptions = {
+const cookieOptions: SecureCookieOptions = {
   path: "/",
   secure: true,
   httpOnly: true,
-  sameSite: SameSite.Lax,
+  sameSite: { value: "Lax" },
   expires: false
 };
 
-const headerOptions: secureHeadersOptions = {
+const headerOptions: SecureHeadersOptions = {
   server: false,
   hsts: true,
   xfo: true,
@@ -42,8 +40,8 @@ const headerOptions: secureHeadersOptions = {
   feature: false
 };
 
-export function parseHeaderOptions(options: secureHeadersOptions) {
-  const defaultOptions: secureHeadersOptions = headerOptions;
+export function parseHeaderOptions(options: SecureHeadersOptions) {
+  const defaultOptions: SecureHeadersOptions = headerOptions;
   for (let property in options) {
     if (options.hasOwnProperty(property)) {
       defaultOptions[property] = options[property];
@@ -51,12 +49,35 @@ export function parseHeaderOptions(options: secureHeadersOptions) {
   }
   return defaultOptions;
 }
-export function parseCookieOptions(options: secureCookieOptions) {
-  const defaultOptions: secureCookieOptions = cookieOptions;
+export function parseCookieOptions(options: SecureCookieOptions) {
+  const defaultOptions: SecureCookieOptions = cookieOptions;
   for (let property in options) {
     if (options.hasOwnProperty(property)) {
       defaultOptions[property] = options[property];
     }
   }
   return defaultOptions;
+}
+
+interface Lax {
+  value: "Lax";
+}
+interface NotSet {
+  value: 0;
+}
+interface Strict {
+  value: "Strict";
+}
+
+export type SameSite = Lax | NotSet | Strict;
+
+export function sameSiteOptions(option: SameSite) {
+  switch (option.value) {
+    case "Lax":
+      return "Lax";
+    case "Strict":
+      return "Strict";
+    case 0:
+      return false;
+  }
 }
