@@ -1,10 +1,9 @@
-import { secureCookieOptions, parseCookieOptions } from "./utils";
+import {
+  SecureCookieOptions,
+  parseCookieOptions,
+  sameSiteOptions
+} from "./utils";
 import { CommonCookie } from "./framework-cookie";
-
-export enum SameSite {
-  Lax = "lax",
-  Strict = "strict"
-}
 
 export class Cookie {
   value: string;
@@ -12,18 +11,19 @@ export class Cookie {
     this.value = value;
   }
 
-  secureCookie(options: secureCookieOptions) {
+  secureCookie(options: SecureCookieOptions) {
     options = parseCookieOptions(options);
     let cookie_value: string;
     cookie_value = `${this.value}; Path=${options.path}`;
     if (options.secure) {
       cookie_value += "; Secure";
     }
-    if (options.httponly) {
+    if (options.httpOnly) {
       cookie_value += "; HttpOnly";
     }
-    if (options.samesite) {
-      cookie_value += `; SameSite=${options.samesite}`;
+    if (options.sameSite) {
+      const sameSiteValue = sameSiteOptions(options.sameSite);
+      cookie_value += `; SameSite=${sameSiteValue}`;
     }
     if (options.expires) {
       if (typeof options.expires == "number") {
@@ -47,25 +47,33 @@ function cookieExpiration(hours: number, dateObject: boolean = false) {
   return returnObject;
 }
 
-export function setCommonCookie(
-  res: any,
-  name: string,
-  value: string,
-  options: secureCookieOptions
-) {
+export function commonCookieOptions(options: SecureCookieOptions) {
   options = parseCookieOptions(options);
-  const expressCookieOptions: CommonCookie = {
+  const cookieOptions: CommonCookie = {
     httpOnly: options.httpOnly,
     path: options.path,
-    secure: options.secure,
-    sameSite: options.sameSite
+    secure: options.secure
   };
   if (options.expires) {
     if (typeof options.expires == "number") {
       const expireDate = new Date();
       expireDate.setHours(expireDate.getHours() + options.expires);
-      expressCookieOptions.expires = expireDate;
+      cookieOptions.expires = expireDate;
     }
   }
-  res.cookie(name, value, expressCookieOptions);
+  if (options.sameSite) {
+    const sameSiteValue = sameSiteOptions(options.sameSite);
+    cookieOptions.sameSite = sameSiteValue;
+  }
+  return cookieOptions;
+}
+
+export function setCommonCookie(
+  res: any,
+  name: string,
+  value: string,
+  options: SecureCookieOptions
+) {
+  const cookieOptions = commonCookieOptions(options);
+  res.cookie(name, value, cookieOptions);
 }

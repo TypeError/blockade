@@ -1,9 +1,13 @@
-import { secureCookieOptions, parseCookieOptions } from "./utils";
-import { setCommonCookie } from "./cookie";
+import {
+  SecureCookieOptions,
+  parseCookieOptions,
+  sameSiteOptions
+} from "./utils";
+import { setCommonCookie, commonCookieOptions } from "./cookie";
 
 export class SecureCookie {
-  options: secureCookieOptions;
-  constructor(options: secureCookieOptions) {
+  options: SecureCookieOptions;
+  constructor(options: SecureCookieOptions) {
     this.options = options;
   }
 
@@ -16,39 +20,29 @@ export class SecureCookie {
   }
 
   hapi(h: any, name: string, value: string) {
-    const options: secureCookieOptions = parseCookieOptions(this.options);
-    const hapiCookieOptions: HapiCookie = {
+    const options: SecureCookieOptions = parseCookieOptions(this.options);
+    const cookieOptions: HapiCookie = {
       isSecure: options.secure,
       isHttpOnly: options.httpOnly,
-      isSameSite: options.sameSite,
       path: options.path
     };
     if (options.expires) {
       if (typeof options.expires == "number") {
         const expireMilliseconds = options.expires * 60 * 60 * 1000;
-        hapiCookieOptions.ttl = expireMilliseconds;
+        cookieOptions.ttl = expireMilliseconds;
       }
     }
-    h.state(name, value, hapiCookieOptions);
+    if (options.sameSite) {
+      const sameSiteValue = sameSiteOptions(options.sameSite);
+      cookieOptions.isSameSite = sameSiteValue;
+    }
+    h.state(name, value, cookieOptions);
   }
 
   koa(ctx: any, name: string, value: string) {
-    const options: secureCookieOptions = parseCookieOptions(this.options);
-    const koaCookieOptions: CommonCookie = {
-      sameSite: options.sameSite,
-      path: options.path,
-      secure: options.secure,
-      httpOnly: options.httpOnly
-    };
-    if (options.expires) {
-      if (typeof options.expires == "number") {
-        const expireDate = new Date();
-        expireDate.setHours(expireDate.getHours() + options.expires);
-        koaCookieOptions.expires = expireDate;
-      }
-
-      ctx.cookies.set(name, value, koaCookieOptions);
-    }
+    const options: SecureCookieOptions = parseCookieOptions(this.options);
+    const cookieOptions: CommonCookie = commonCookieOptions(options);
+    ctx.cookies.set(name, value, cookieOptions);
   }
 
   nest(res: any, name: string, value: string) {
