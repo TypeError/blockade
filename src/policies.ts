@@ -1,5 +1,36 @@
+import { SecurityHeaders } from "./headers";
+
+export const defaultValue = "default";
+
+export class Content {
+  policy: string = "";
+
+  default() {
+    this.policy = defaultValue;
+    return this;
+  }
+
+  notSet() {
+    return undefined;
+  }
+
+  get value() {
+    return this.policy;
+  }
+}
+
 export class CSP {
   policy: HeaderOptions[] = [];
+  defaultValue?: string;
+
+  default() {
+    this.defaultValue = defaultValue;
+    return this;
+  }
+
+  notSet() {
+    return undefined;
+  }
 
   baseUri(...sources: string[]) {
     this.policy.push({ directive: "base-uri", sources: sources });
@@ -107,13 +138,25 @@ export class CSP {
   }
 
   get value() {
-    const headerValue = getPolicyMultiOpt(this.policy);
-    return headerValue;
+    if (this.defaultValue) {
+      return this.defaultValue;
+    } else {
+      return getPolicyMultiOpt(this.policy);
+    }
   }
 }
 
 export class XFO {
   policy: string = "";
+
+  default() {
+    this.policy = defaultValue;
+    return this;
+  }
+
+  notSet() {
+    return undefined;
+  }
 
   allowFrom(uri: string) {
     this.policy = `allow-from ${uri}`;
@@ -138,6 +181,15 @@ export class XFO {
 
 export class XXP {
   policy: string = "";
+
+  default() {
+    this.policy = defaultValue;
+    return this;
+  }
+
+  notSet() {
+    return undefined;
+  }
 
   disabled() {
     this.policy = "0";
@@ -166,8 +218,17 @@ export class XXP {
 }
 
 export class Referrer {
-  type = "Referrer";
   policy: string[] = [];
+  defaultValue?: string;
+
+  default() {
+    this.defaultValue = defaultValue;
+    return this;
+  }
+
+  notSet() {
+    return undefined;
+  }
 
   noReferrer() {
     this.policy.push("no-referrer");
@@ -210,13 +271,26 @@ export class Referrer {
   }
 
   get value() {
-    const headerValue = getPolicy(this.policy, ", ");
-    return headerValue;
+    if (this.defaultValue) {
+      return this.defaultValue;
+    } else {
+      return getPolicy(this.policy, ", ");
+    }
   }
 }
 
 export class HSTS {
   policy: string[] = [];
+  defaultValue?: string;
+
+  default() {
+    this.defaultValue = defaultValue;
+    return this;
+  }
+
+  notSet() {
+    return undefined;
+  }
 
   includeSubdomains() {
     this.policy.push("includeSubDomains");
@@ -234,13 +308,26 @@ export class HSTS {
   }
 
   get value() {
-    const headerValue = getPolicy(this.policy, "; ");
-    return headerValue;
+    if (this.defaultValue) {
+      return this.defaultValue;
+    } else {
+      return getPolicy(this.policy, "; ");
+    }
   }
 }
 
 export class Cache {
   policy: string[] = [];
+  defaultValue?: string;
+
+  default() {
+    this.defaultValue = defaultValue;
+    return this;
+  }
+
+  notSet() {
+    return undefined;
+  }
 
   immutable() {
     this.policy.push("immutable");
@@ -318,13 +405,26 @@ export class Cache {
   }
 
   get value() {
-    const headerValue = getPolicy(this.policy, ", ");
-    return headerValue;
+    if (this.defaultValue) {
+      return this.defaultValue;
+    } else {
+      return getPolicy(this.policy, ", ");
+    }
   }
 }
 
 export class Feature {
   policy: HeaderOptions[] = [];
+  defaultValue?: string;
+
+  default() {
+    this.defaultValue = defaultValue;
+    return this;
+  }
+
+  notSet() {
+    return undefined;
+  }
 
   accelerometer(...allowlist: string[]) {
     this.policy.push({ directive: "accelerometer", sources: allowlist });
@@ -425,8 +525,28 @@ export class Feature {
   }
 
   get value() {
-    const headerValue = getPolicyMultiOpt(this.policy);
-    return headerValue;
+    if (this.defaultValue) {
+      return this.defaultValue;
+    } else {
+      return getPolicyMultiOpt(this.policy);
+    }
+  }
+}
+
+export class Server {
+  policy: string = "";
+
+  set(value: string) {
+    this.policy = value;
+    return this;
+  }
+
+  notSet() {
+    return undefined;
+  }
+
+  get value() {
+    return this.policy;
   }
 }
 

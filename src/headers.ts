@@ -1,4 +1,5 @@
 import { SecureHeadersOptions, parseHeaderOptions } from "./utils";
+import { defaultValue } from "./policies";
 
 class HTTPHeader {
   header: string;
@@ -79,57 +80,57 @@ export class SecurityHeaders {
     options = parseHeaderOptions(options);
 
     if (options.server) {
-      if (typeof options.server == "string") {
-        SecurityHeaders.server.value = options.server;
+      if (options.server.value !== defaultValue) {
+        SecurityHeaders.server.value = options.server.value;
       }
       headers.push(SecurityHeaders.server);
     }
 
     if (options.hsts) {
-      if (typeof options.hsts == "string") {
-        SecurityHeaders.httpStrictTransportSecurity.value = options.hsts;
+      if (options.hsts.value !== defaultValue) {
+        SecurityHeaders.httpStrictTransportSecurity.value = options.hsts.value;
       }
       headers.push(SecurityHeaders.httpStrictTransportSecurity);
     }
 
     if (options.xfo) {
-      if (typeof options.xfo == "string") {
-        SecurityHeaders.xFrameOptions.value = options.xfo;
+      if (options.xfo.value !== defaultValue) {
+        SecurityHeaders.xFrameOptions.value = options.xfo.value;
       }
       headers.push(SecurityHeaders.xFrameOptions);
     }
 
     if (options.xxp) {
-      if (typeof options.xxp == "string") {
-        SecurityHeaders.xXssProtection.value = options.xxp;
+      if (options.xxp.value !== defaultValue) {
+        SecurityHeaders.xXssProtection.value = options.xxp.value;
       }
       headers.push(SecurityHeaders.xXssProtection);
     }
 
     if (options.content) {
-      if (typeof options.content == "string") {
-        SecurityHeaders.xContentTypeOptions.value = options.content;
+      if (options.content.value !== defaultValue) {
+        SecurityHeaders.xContentTypeOptions.value = options.content.value;
       }
       headers.push(SecurityHeaders.xContentTypeOptions);
     }
 
     if (options.csp) {
-      if (typeof options.csp == "string") {
-        SecurityHeaders.contentSecurityPolicy.value = options.csp;
+      if (options.csp.value !== defaultValue) {
+        SecurityHeaders.contentSecurityPolicy.value = options.csp.value;
       }
       headers.push(SecurityHeaders.contentSecurityPolicy);
     }
 
     if (options.referrer) {
-      if (typeof options.referrer == "string") {
-        SecurityHeaders.referrerPolicy.value = options.referrer;
+      if (options.referrer.value !== defaultValue) {
+        SecurityHeaders.referrerPolicy.value = options.referrer.value;
       }
       headers.push(SecurityHeaders.referrerPolicy);
     }
 
     if (options.cache) {
-      if (typeof options.cache == "string") {
-        SecurityHeaders.cacheControl.value = options.cache;
+      if (options.cache.value !== defaultValue) {
+        SecurityHeaders.cacheControl.value = options.cache.value;
       } else {
         headers.push(SecurityHeaders.pragma);
         headers.push(SecurityHeaders.expires);
@@ -138,8 +139,8 @@ export class SecurityHeaders {
     }
 
     if (options.feature) {
-      if (typeof options.feature == "string") {
-        SecurityHeaders.featurePolicy.value = options.feature;
+      if (options.feature.value !== defaultValue) {
+        SecurityHeaders.featurePolicy.value = options.feature.value;
       }
       headers.push(SecurityHeaders.featurePolicy);
     }

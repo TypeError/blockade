@@ -1,3 +1,17 @@
+import {
+  Content,
+  CSP,
+  Cache,
+  HSTS,
+  XFO,
+  XXP,
+  Feature,
+  Referrer,
+  Server,
+  seconds,
+  values
+} from "./policies";
+
 export interface SecureCookieOptions {
   path?: string;
   secure?: boolean;
@@ -8,16 +22,26 @@ export interface SecureCookieOptions {
 }
 
 export interface SecureHeadersOptions {
-  server?: boolean | string;
-  hsts?: boolean | string;
-  xfo?: boolean | string;
-  xxp?: boolean | string;
-  content?: boolean | string;
-  csp?: boolean | string;
-  referrer?: boolean | string;
-  cache?: boolean | string;
-  feature?: boolean | string;
-  [key: string]: boolean | string | undefined;
+  server?: Server;
+  hsts?: HSTS;
+  xfo?: XFO;
+  xxp?: XXP;
+  content?: Content;
+  csp?: CSP;
+  referrer?: Referrer;
+  cache?: Cache;
+  feature?: Feature;
+  [key: string]:
+    | Content
+    | CSP
+    | Cache
+    | HSTS
+    | XFO
+    | XXP
+    | Feature
+    | Referrer
+    | Server
+    | undefined;
 }
 
 const cookieOptions: SecureCookieOptions = {
@@ -29,15 +53,15 @@ const cookieOptions: SecureCookieOptions = {
 };
 
 const headerOptions: SecureHeadersOptions = {
-  server: false,
-  hsts: true,
-  xfo: true,
-  xxp: true,
-  content: true,
-  csp: false,
-  referrer: true,
-  cache: true,
-  feature: false
+  server: new Server().notSet(),
+  hsts: new HSTS().default(),
+  xfo: new XFO().default(),
+  xxp: new XXP().default(),
+  content: new Content().default(),
+  csp: new CSP().notSet(),
+  referrer: new Referrer().default(),
+  cache: new Cache().default(),
+  feature: new Feature().notSet()
 };
 
 export function parseHeaderOptions(options: SecureHeadersOptions) {

@@ -1,6 +1,7 @@
 export { SecureHeaders } from "./framework-headers";
 export { SecureCookie } from "./framework-cookie";
 export {
+  Content,
   CSP,
   Cache,
   HSTS,
@@ -8,6 +9,7 @@ export {
   XXP,
   Feature,
   Referrer,
+  Server,
   seconds,
   values
 } from "./policies";
