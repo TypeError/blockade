@@ -1,5 +1,5 @@
 import { SecureHeadersOptions, parseHeaderOptions } from "./utils";
-import { defaultValue } from "./policies";
+import { PolicyOptions } from "./policies";
 
 class HTTPHeader {
   header: string;
@@ -80,71 +80,114 @@ export class SecurityHeaders {
     options = parseHeaderOptions(options);
 
     if (options.server) {
-      if (options.server.value !== defaultValue) {
+      if (
+        options.server.option === PolicyOptions.CustomValue &&
+        options.server.value
+      ) {
         SecurityHeaders.server.value = options.server.value;
+        headers.push(SecurityHeaders.server);
+      } else if (options.server.option === PolicyOptions.DefaultHeader) {
+        headers.push(SecurityHeaders.server);
       }
-      headers.push(SecurityHeaders.server);
     }
 
     if (options.hsts) {
-      if (options.hsts.value !== defaultValue) {
+      if (
+        options.hsts.option === PolicyOptions.CustomValue &&
+        options.hsts.value
+      ) {
         SecurityHeaders.httpStrictTransportSecurity.value = options.hsts.value;
+        headers.push(SecurityHeaders.httpStrictTransportSecurity);
+      } else if (options.hsts.option === PolicyOptions.DefaultHeader) {
+        headers.push(SecurityHeaders.httpStrictTransportSecurity);
       }
-      headers.push(SecurityHeaders.httpStrictTransportSecurity);
     }
 
     if (options.xfo) {
-      if (options.xfo.value !== defaultValue) {
+      if (
+        options.xfo.option === PolicyOptions.CustomValue &&
+        options.xfo.value
+      ) {
         SecurityHeaders.xFrameOptions.value = options.xfo.value;
+        headers.push(SecurityHeaders.xFrameOptions);
+      } else if (options.xfo.option === PolicyOptions.DefaultHeader) {
+        headers.push(SecurityHeaders.xFrameOptions);
       }
-      headers.push(SecurityHeaders.xFrameOptions);
     }
 
     if (options.xxp) {
-      if (options.xxp.value !== defaultValue) {
+      if (
+        options.xxp.option === PolicyOptions.CustomValue &&
+        options.xxp.value
+      ) {
         SecurityHeaders.xXssProtection.value = options.xxp.value;
+        headers.push(SecurityHeaders.xXssProtection);
+      } else if (options.xxp.option === PolicyOptions.DefaultHeader) {
+        headers.push(SecurityHeaders.xXssProtection);
       }
-      headers.push(SecurityHeaders.xXssProtection);
     }
 
     if (options.content) {
-      if (options.content.value !== defaultValue) {
+      if (
+        options.content.option === PolicyOptions.CustomValue &&
+        options.content.value
+      ) {
         SecurityHeaders.xContentTypeOptions.value = options.content.value;
+        headers.push(SecurityHeaders.xContentTypeOptions);
+      } else if (options.content.option === PolicyOptions.DefaultHeader) {
+        headers.push(SecurityHeaders.xContentTypeOptions);
       }
-      headers.push(SecurityHeaders.xContentTypeOptions);
     }
 
     if (options.csp) {
-      if (options.csp.value !== defaultValue) {
+      if (
+        options.csp.option === PolicyOptions.CustomValue &&
+        options.csp.value
+      ) {
         SecurityHeaders.contentSecurityPolicy.value = options.csp.value;
+        headers.push(SecurityHeaders.contentSecurityPolicy);
+      } else if (options.csp.option === PolicyOptions.DefaultHeader) {
+        headers.push(SecurityHeaders.contentSecurityPolicy);
       }
-      headers.push(SecurityHeaders.contentSecurityPolicy);
     }
 
     if (options.referrer) {
-      if (options.referrer.value !== defaultValue) {
+      if (
+        options.referrer.option === PolicyOptions.CustomValue &&
+        options.referrer.value
+      ) {
         SecurityHeaders.referrerPolicy.value = options.referrer.value;
+        headers.push(SecurityHeaders.referrerPolicy);
+      } else if (options.referrer.option === PolicyOptions.DefaultHeader) {
+        headers.push(SecurityHeaders.referrerPolicy);
       }
-      headers.push(SecurityHeaders.referrerPolicy);
     }
 
     if (options.cache) {
-      if (options.cache.value !== defaultValue) {
+      if (
+        options.cache.option === PolicyOptions.CustomValue &&
+        options.cache.value
+      ) {
         SecurityHeaders.cacheControl.value = options.cache.value;
-      } else {
+        headers.push(SecurityHeaders.cacheControl);
+      } else if (options.cache.option === PolicyOptions.DefaultHeader) {
+        headers.push(SecurityHeaders.cacheControl);
         headers.push(SecurityHeaders.pragma);
         headers.push(SecurityHeaders.expires);
       }
-      headers.push(SecurityHeaders.cacheControl);
     }
 
     if (options.feature) {
-      if (options.feature.value !== defaultValue) {
+      if (
+        options.feature.option === PolicyOptions.CustomValue &&
+        options.feature.value
+      ) {
         SecurityHeaders.featurePolicy.value = options.feature.value;
+        headers.push(SecurityHeaders.featurePolicy);
+      } else if (options.feature.option === PolicyOptions.DefaultHeader) {
+        headers.push(SecurityHeaders.featurePolicy);
       }
-      headers.push(SecurityHeaders.featurePolicy);
     }
-
     return headers;
   }
 }

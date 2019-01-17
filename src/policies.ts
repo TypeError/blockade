@@ -1,35 +1,62 @@
-import { SecurityHeaders } from "./headers";
-
 export const defaultValue = "default";
 
+export enum PolicyOptions {
+  NotSet,
+  DefaultHeader,
+  CustomValue
+}
+
 export class Content {
-  policy: string = "";
+  policy?: string;
+  custom?: string;
+  optionType: PolicyOptions = PolicyOptions.CustomValue;
 
   default() {
-    this.policy = defaultValue;
+    this.optionType = PolicyOptions.DefaultHeader;
     return this;
   }
 
   notSet() {
-    return undefined;
+    this.optionType = PolicyOptions.NotSet;
+    return this;
+  }
+
+  set(value: string) {
+    this.custom = value;
+    return this;
   }
 
   get value() {
-    return this.policy;
+    if (this.custom) {
+      return this.custom;
+    } else if (this.policy) {
+      return this.policy;
+    }
+  }
+
+  get option() {
+    return this.optionType;
   }
 }
 
 export class CSP {
   policy: HeaderOptions[] = [];
-  defaultValue?: string;
+  custom?: string;
+  optionType: PolicyOptions = PolicyOptions.CustomValue;
 
   default() {
-    this.defaultValue = defaultValue;
+    this.optionType = PolicyOptions.DefaultHeader;
     return this;
   }
 
   notSet() {
-    return undefined;
+    this.optionType = PolicyOptions.NotSet;
+    return this;
+  }
+
+  set(value: string) {
+    this.custom = value;
+    return this;
   }
 
   baseUri(...sources: string[]) {
@@ -138,24 +165,36 @@ export class CSP {
   }
 
   get value() {
-    if (this.defaultValue) {
-      return this.defaultValue;
-    } else {
+    if (this.custom) {
+      return this.custom;
+    } else if (this.policy) {
       return getPolicyMultiOpt(this.policy);
     }
+  }
+
+  get option() {
+    return this.optionType;
   }
 }
 
 export class XFO {
-  policy: string = "";
+  policy?: string;
+  custom?: string;
+  optionType: PolicyOptions = PolicyOptions.CustomValue;
 
   default() {
-    this.policy = defaultValue;
+    this.optionType = PolicyOptions.DefaultHeader;
     return this;
   }
 
   notSet() {
-    return undefined;
+    this.optionType = PolicyOptions.NotSet;
+    return this;
+  }
+
+  set(value: string) {
+    this.custom = value;
+    return this;
   }
 
   allowFrom(uri: string) {
@@ -174,23 +213,37 @@ export class XFO {
   }
 
   get value() {
-    const headerValue = this.policy;
-    return headerValue;
+    if (this.custom) {
+      return this.custom;
+    } else if (this.policy) {
+      return this.policy;
+    }
+  }
+
+  get option() {
+    return this.optionType;
   }
 }
 
 export class XXP {
-  policy: string = "";
+  policy?: string;
+  custom?: string;
+  optionType: PolicyOptions = PolicyOptions.CustomValue;
 
   default() {
-    this.policy = defaultValue;
+    this.optionType = PolicyOptions.DefaultHeader;
     return this;
   }
 
   notSet() {
-    return undefined;
+    this.optionType = PolicyOptions.NotSet;
+    return this;
   }
 
+  set(value: string) {
+    this.custom = value;
+    return this;
+  }
   disabled() {
     this.policy = "0";
     return this;
@@ -212,22 +265,36 @@ export class XXP {
   }
 
   get value() {
-    const headerValue = this.policy;
-    return headerValue;
+    if (this.custom) {
+      return this.custom;
+    } else if (this.policy) {
+      return this.policy;
+    }
+  }
+
+  get option() {
+    return this.optionType;
   }
 }
 
 export class Referrer {
   policy: string[] = [];
-  defaultValue?: string;
+  custom?: string;
+  optionType: PolicyOptions = PolicyOptions.CustomValue;
 
   default() {
-    this.defaultValue = defaultValue;
+    this.optionType = PolicyOptions.DefaultHeader;
     return this;
   }
 
   notSet() {
-    return undefined;
+    this.optionType = PolicyOptions.NotSet;
+    return this;
+  }
+
+  set(value: string) {
+    this.custom = value;
+    return this;
   }
 
   noReferrer() {
@@ -271,25 +338,36 @@ export class Referrer {
   }
 
   get value() {
-    if (this.defaultValue) {
-      return this.defaultValue;
-    } else {
+    if (this.custom) {
+      return this.custom;
+    } else if (this.policy) {
       return getPolicy(this.policy, ", ");
     }
+  }
+
+  get option() {
+    return this.optionType;
   }
 }
 
 export class HSTS {
   policy: string[] = [];
-  defaultValue?: string;
+  custom?: string;
+  optionType: PolicyOptions = PolicyOptions.CustomValue;
 
   default() {
-    this.defaultValue = defaultValue;
+    this.optionType = PolicyOptions.DefaultHeader;
     return this;
   }
 
   notSet() {
-    return undefined;
+    this.optionType = PolicyOptions.NotSet;
+    return this;
+  }
+
+  set(value: string) {
+    this.custom = value;
+    return this;
   }
 
   includeSubdomains() {
@@ -308,25 +386,36 @@ export class HSTS {
   }
 
   get value() {
-    if (this.defaultValue) {
-      return this.defaultValue;
-    } else {
+    if (this.custom) {
+      return this.custom;
+    } else if (this.policy) {
       return getPolicy(this.policy, "; ");
     }
+  }
+
+  get option() {
+    return this.optionType;
   }
 }
 
 export class Cache {
   policy: string[] = [];
-  defaultValue?: string;
+  custom?: string;
+  optionType: PolicyOptions = PolicyOptions.CustomValue;
 
   default() {
-    this.defaultValue = defaultValue;
+    this.optionType = PolicyOptions.DefaultHeader;
     return this;
   }
 
   notSet() {
-    return undefined;
+    this.optionType = PolicyOptions.NotSet;
+    return this;
+  }
+
+  set(value: string) {
+    this.custom = value;
+    return this;
   }
 
   immutable() {
@@ -405,25 +494,36 @@ export class Cache {
   }
 
   get value() {
-    if (this.defaultValue) {
-      return this.defaultValue;
-    } else {
+    if (this.custom) {
+      return this.custom;
+    } else if (this.policy) {
       return getPolicy(this.policy, ", ");
     }
+  }
+
+  get option() {
+    return this.optionType;
   }
 }
 
 export class Feature {
   policy: HeaderOptions[] = [];
-  defaultValue?: string;
+  custom?: string;
+  optionType: PolicyOptions = PolicyOptions.CustomValue;
 
   default() {
-    this.defaultValue = defaultValue;
+    this.optionType = PolicyOptions.DefaultHeader;
     return this;
   }
 
   notSet() {
-    return undefined;
+    this.optionType = PolicyOptions.NotSet;
+    return this;
+  }
+
+  set(value: string) {
+    this.custom = value;
+    return this;
   }
 
   accelerometer(...allowlist: string[]) {
@@ -525,28 +625,48 @@ export class Feature {
   }
 
   get value() {
-    if (this.defaultValue) {
-      return this.defaultValue;
-    } else {
+    if (this.custom) {
+      return this.custom;
+    } else if (this.policy) {
       return getPolicyMultiOpt(this.policy);
     }
+  }
+
+  get option() {
+    return this.optionType;
   }
 }
 
 export class Server {
-  policy: string = "";
+  policy?: string;
+  custom?: string;
+  optionType: PolicyOptions = PolicyOptions.CustomValue;
 
-  set(value: string) {
-    this.policy = value;
+  default() {
+    this.optionType = PolicyOptions.DefaultHeader;
     return this;
   }
 
   notSet() {
-    return undefined;
+    this.optionType = PolicyOptions.NotSet;
+    return this;
+  }
+
+  set(value: string) {
+    this.custom = value;
+    return this;
   }
 
   get value() {
-    return this.policy;
+    if (this.custom) {
+      return this.custom;
+    } else if (this.policy) {
+      return this.policy;
+    }
+  }
+
+  get option() {
+    return this.optionType;
   }
 }
 
