@@ -1,5 +1,3 @@
-export const defaultValue = "default";
-
 export enum PolicyOptions {
   NotSet,
   DefaultHeader,

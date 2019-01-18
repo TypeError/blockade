@@ -7,9 +7,7 @@ import {
   XXP,
   Feature,
   Referrer,
-  Server,
-  seconds,
-  values
+  Server
 } from "./policies";
 
 export interface SecureCookieOptions {
