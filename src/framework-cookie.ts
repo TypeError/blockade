@@ -3,7 +3,7 @@ import {
   parseCookieOptions,
   sameSiteOptions
 } from "./utils";
-import { setCommonCookie, commonCookieOptions } from "./cookie";
+import { setCommonCookie, commonCookieOptions, Cookie } from "./cookie";
 
 export class SecureCookie {
   options: SecureCookieOptions;
@@ -17,6 +17,11 @@ export class SecureCookie {
 
   express(res: any, name: string, value: string) {
     setCommonCookie(res, name, value, this.options);
+  }
+
+  fastify(res: any, name: string, value: string) {
+    const cookieValue = new Cookie(value).secureCookie(this.options);
+    res.header("Set-Cookie", `${name}=${cookieValue}`);
   }
 
   hapi(h: any, name: string, value: string) {
@@ -45,8 +50,18 @@ export class SecureCookie {
     ctx.cookies.set(name, value, cookieOptions);
   }
 
+  polka(res: any, name: string, value: string) {
+    const cookieValue = new Cookie(value).secureCookie(this.options);
+    res.setHeader("Set-Cookie", `${name}=${cookieValue}`);
+  }
+
   nest(res: any, name: string, value: string) {
     setCommonCookie(res, name, value, this.options);
+  }
+
+  restify(res: any, name: string, value: string) {
+    const cookieValue = new Cookie(value).secureCookie(this.options);
+    res.header("Set-Cookie", `${name}=${cookieValue}`);
   }
 
   sails(res: any, name: string, value: string) {

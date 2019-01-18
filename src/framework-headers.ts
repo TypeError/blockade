@@ -26,6 +26,10 @@ export class SecureHeaders {
     setCommonHeader(res, this.options);
   }
 
+  fastify(reply: any) {
+    setHeaderTuple(reply, this.options);
+  }
+
   hapi(response: any) {
     setHeaderTuple(response, this.options);
   }
@@ -41,6 +45,14 @@ export class SecureHeaders {
 
   nest(res: any) {
     setCommonHeader(res, this.options);
+  }
+
+  polka(res: any) {
+    setHeader(res, this.options);
+  }
+
+  restify(response: any) {
+    setHeaderTuple(response, this.options);
   }
 
   sails(res: any) {
