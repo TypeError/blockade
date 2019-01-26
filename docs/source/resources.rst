@@ -7,10 +7,13 @@ Frameworks
 ----------------------
 -  `AdonisJs <https://github.com/adonisjs/adonis-framework>`__ - NodeJs Web Application Framework. Makes it easy for you to write webapps with less code 😃
 -  `Express <https://github.com/expressjs/express>`__ - Fast, unopinionated, minimalist web framework for node.
+-  `Fastify <https://github.com/fastify/fastify>`__ - Fast and low overhead web framework, for Node.js 
 -  `hapi <https://github.com/hapijs/hapi>`__ - Server Framework  for Node.js
 -  `Koa.js <https://github.com/koajs>`__ - Next generation web framework for Node.js
 - `Meteor <https://github.com/meteor/meteor>`__, - Meteor, the JavaScript App Platform
 - `Nest <https://github.com/nestjs/nest>`__, - A progressive Node.js framework for building efficient and scalable server-side applications on top of TypeScript & JavaScript (ES6, ES7, ES8) heavily inspired by Angular 😻🚀
+- `Polka <https://github.com/lukeed/polka>`__ - A micro web server so fast, it'll make you dance! 👯
+- `restify <https://github.com/restify/node-restify>`__ - The future of Node.js REST development
 - `Sails <https://github.com/balderdashy/sails>`__, - Realtime MVC Framework for Node.js 
 - `Total.js <https://github.com/totaljs/framework>`__ - Node.js framework
 

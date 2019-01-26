@@ -49,7 +49,8 @@ Usage
 
 .. code:: javascript
 
-   secureCookie.framework(response, "foo", "bar");
+  const secureCookie = new blockade.SecureCookie();
+  secureCookie.framework(response, "foo", "bar");
 
 *Default Set-Cookie HTTP response header:*
 
@@ -67,29 +68,26 @@ options:
 
 -  ``name`` - set the cookie name *(string, No default value)*
 -  ``value`` - set the cookie value *(string, No default value)*
--  ``path`` - set the Path attribute, e.g. ``path=“/secure”`` *(string,
+-  ``path`` - set the Path attribute, e.g. ``path=“/blockade”`` *(string,
    default=“/”)*
 -  ``secure`` - set the Secure flag *(bool, default=True)*
 -  ``httpOnly`` - set the HttpOnly flag *(bool, default=True)*
 -  ``sameSite`` - set the SameSite attribute,
-   e.g. ``SameSite.LAX`` *(bool / enum, options:*
-   ``blockade.SameSite.Strict``, ``blockade.SameSite.Lax`` *or*
-   ``False``, *default=blockade.SameSite.Lax)*
+   e.g. ``{value: "Strict" }``, ``{value: "Lax" }`` *or*
+   ``False`` *default={value: "Lax" }*
 -  ``expires`` - set the Expires attribute with the cookie expiration in
    hours, e.g. ``expires=1`` *(number / bool, default=False)*
 
-
-.. _example-3:
 
 **Example:**
 
 .. code:: javascript
 
-   const blockade = require("blockade");
+  const blockade = require("blockade");
 
-   const secureCookie = new blockade.SecureCookie({
-     expires: 1,
-     sameSite: blockade.SameSite.Strict
-   });
+  const secureCookie = new blockade.SecureCookie({
+    sameSite: { value: "Strict" },
+    expires: 1
+  });
 
-   secureCookie.framework(response, "foo", "bar");
+  secureCookie.framework(response, "foo", "bar");

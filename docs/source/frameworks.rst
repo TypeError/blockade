@@ -65,7 +65,7 @@ Cookies
 Coookies
 ~~~~~~~~
 
-``ecureCookie.adonis(response, "foo", "bar")``
+``ecureCookie.adonis(response, name, value)``
 
 
 **Example:**
@@ -136,6 +136,56 @@ Cookies
     res.send("blockade");
   });
         
+  . . . 
+
+Fastify
+--------
+
+Headers
+~~~~~~~~
+
+``secureHeaders.fastify(reply)``
+
+
+**Example:**
+
+.. code:: javascript
+
+  const fastify = require("fastify")();
+
+  const blockade = require("blockade");
+  const secureHeaders = new blockade.SecureHeaders();
+
+  . . . 
+
+  fastify.addHook("preHandler", async (request, reply) => {
+    secureHeaders.fastify(reply);
+  });
+      
+  . . . 
+
+Cookies
+~~~~~~~~
+
+``secureCookie.fastify(reply, name, value)``
+
+
+**Example:**
+
+.. code:: javascript
+
+  const fastify = require("fastify")();
+
+  const blockade = require("blockade");
+  const secureCookie = new blockade.SecureCookie();
+
+  . . . 
+
+  fastify.get("/", function(request, reply) {
+    secureCookie.fastify(reply, "foo", "bar");
+    reply.send({ blockade: true });
+  });
+          
   . . . 
 
 hapi
@@ -308,7 +358,7 @@ Headers
 Cookies
 ~~~~~~~~
 
-``secureCookie.nest(res, 'foo', 'bar')``
+``secureCookie.nest(res, name, value)``
 
 
 **Example:**
@@ -330,6 +380,124 @@ Cookies
       return res.status(HttpStatus.OK).json([]);
     }
   }
+
+Polka
+--------
+
+Headers
+~~~~~~~
+
+``secureHeaders.polka(res)``
+
+
+**Example:**
+
+.. code:: javascript
+
+  const polka = require("polka");
+  const blockade = require("blockade");
+  const secureHeaders = new blockade.SecureHeaders();
+
+  function headers(req, res, next) {
+    secureHeaders.polka(res);
+    next();
+  }
+
+  polka()
+    .use(headers)
+    .get("/", (req, res) => {
+      res.end(`Blockade`);
+    })
+    .listen(3000, err => {
+      if (err) throw err;
+      console.log(`> Running on localhost:3000`);
+    });
+
+
+
+Cookies
+~~~~~~~~
+
+``secureCookie.polka(res, name, value)``
+
+
+**Example:**
+
+.. code:: javascript
+
+  const polka = require("polka");
+  const blockade = require("blockade");
+  const secureCookie = new blockade.SecureCookie();
+
+  polka()
+    .get("/", (req, res) => {
+      secureCookie.polka(res, "foo", "bar");
+      res.end(`Blockade`);
+    })
+    .listen(3000, err => {
+      if (err) throw err;
+      console.log(`> Running on localhost:3000`);
+    });
+
+
+restify
+--------
+
+Headers
+~~~~~~~
+
+``secureHeaders.restify(res)``
+
+
+**Example:**
+
+.. code:: javascript
+
+  var restify = require("restify");
+  const blockade = require("blockade");
+  const secureHeaders = new blockade.SecureHeaders();
+
+  function respond(req, res, next) {
+    res.send("Blockade");
+    next();
+  }
+
+  function headers(req, res, next) {
+    secureHeaders.restify(res);
+    next();
+  }
+
+  . . . 
+
+  var server = restify.createServer();
+  server.pre(headers);
+  server.get("/", respond);
+
+Cookies
+~~~~~~~~
+
+``secureCookie.restify(res, name, value)``
+
+
+**Example:**
+
+.. code:: javascript
+
+  var restify = require("restify");
+  const blockade = require("blockade");
+  const secureCookie = new blockade.SecureCookie();
+
+  function respond(req, res, next) {
+    secureCookie.restify(res, "foo", "bar");
+    res.send("Blockade");
+    next();
+  }
+
+  . . . 
+
+  var server = restify.createServer();
+  server.get("/", respond);
+
 
 Sails
 --------
@@ -363,7 +531,7 @@ Headers
 Cookies
 ~~~~~~~~
 
-``secureCookie.sails(res, "foo", "bar")``
+``secureCookie.sails(res, name, value)``
 
 
 **Example:**
@@ -379,3 +547,53 @@ Cookies
       return res.send("Blockade");
     }
   };
+
+
+Total.js
+---------
+
+Headers
+~~~~~~~
+
+``secureHeaders.total(response)``
+
+
+**Example:**
+
+.. code:: javascript
+
+  const blockade = require("blockade");
+  const secureHeaders = new blockade.SecureHeaders();
+
+  exports.install = function() {
+    ROUTE("/", view_index);
+  };
+
+  function view_index() {
+    var response = this;
+    secureHeaders.total(response);
+    response.view("index");
+  }
+
+Cookies
+~~~~~~~~
+
+``secureCookie.total(response, name, value)``
+
+
+**Example:**
+
+.. code:: javascript
+
+  const blockade = require("blockade");
+  const secureCookie = new blockade.SecureCookie();
+
+  exports.install = function() {
+    ROUTE("/", view_index);
+  };
+
+  function view_index() {
+    var response = this;
+    secureCookie.total(response, "foo", "bar");
+    response.view("index");
+  }

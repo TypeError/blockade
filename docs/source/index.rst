@@ -10,15 +10,20 @@ Blockade
 
 Blockade ⚓️ is a lightweight package that adds optional security headers and cookie attributes for Node.js web frameworks.
 
+Security HTTP headers and cookie attributes help enhance the security of your web application by enabling built-in browser security mechanisms. 
+
 Supported Node.js web frameworks:
 ----------------------------------
 
-`AdonisJs <https://adonisjs.com>`__
+`AdonisJs <https://adonisjs.com>`__,
 `Express <https://expressjs.com>`__, 
+`Fastify <https://www.fastify.io>`__, 
 `hapi <https://hapijs.com>`__, 
 `Koa <https://koajs.com>`__, 
 `Meteor <https://www.meteor.com>`__, 
 `Nest <https://nestjs.com>`__, 
+`Polka <https://github.com/lukeed/polka>`__, 
+`restify <http://restify.com>`__, 
 `Sails <https://sailsjs.com>`__, 
 `Total.js <https://www.totaljs.com>`__
 

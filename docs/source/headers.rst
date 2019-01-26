@@ -81,7 +81,11 @@ Additional information
 Usage
 ^^^^^^^
 
-``secureHeaders.framework(response)``
+.. code:: javascript
+
+  const secureHeaders = new blockade.SecureHeaders();
+  secureHeaders.framework(response);
+
 
 **Default HTTP response headers:**
 
@@ -99,26 +103,18 @@ Usage
 Options
 ^^^^^^^^
 
-You can toggle the setting of headers with default values by passing an object with ``true`` or ``false`` and override default values by passing a string or  policy to the following options: 
+You can toggle the setting of headers with default values by passing an object with ``new blockade.Header().default()`` or ``new blockade.Header().notSet()`` and override default values by passing ``new blockade.Header().set("custom")`` or  policy to the following options: 
 
--  ``server`` - set the Server header, e.g. ``Server=“Blockade”``
-   *(string / bool / Policy, default=False)*
--  ``hsts`` - set the Strict-Transport-Security header *(string / bool /
-   Policy, default=True)*
--  ``xfo`` - set the X-Frame-Options header *(string / bool /
-   Policy, default=True)*
--  ``xxp`` - set the X-XSS-Protection header *(string / bool /
-   Policy, default=True)*
--  ``content`` - set the X-Content-Type-Options header *(string / bool /
-   Policy, default=True)*
--  ``csp`` - set the Content-Security-Policy *(string / bool /
-   Policy, default=False)* \*
--  ``referrer`` - set the Referrer-Policy header *(string / bool /
-   Policy, default=True)*
--  ``cache`` - set the Cache-control and Pragma headers *(string / bool
-   / Policy, default=True)*
--  ``feature`` - set the Feature-Policy header *(SecurePolicies / string
-   / bool / Policy, default=False)*
+-  ``server`` - set the Server header, e.g. ``new blockade.Server().set("Blockade")``
+   - (default= ``default=Server().notSet()`` )
+-  ``hsts`` - set the Strict-Transport-Security header - (default= ``HSTS().default()`` )
+-  ``xfo`` - set the X-Frame-Options header - (default= ``XFO().default()`` )
+-  ``xxp`` - set the X-XSS-Protection header - (default= ``XXP().default()`` )
+-  ``content`` - set the X-Content-Type-Options header - (default= ``Content().default()`` )
+-  ``csp`` - set the Content-Security-Policy - (default= ``CSP().notSet()`` )
+-  ``referrer`` - set the Referrer-Policy header - (default= ``Referrer().default()`` )
+-  ``cache`` - set the Cache-control and Pragma headers - (default= ``Cache().default()`` )
+-  ``feature`` - set the Feature-Policy header - (default= ``Feature().notSet()`` )
 
 
 **Example:**
