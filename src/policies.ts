@@ -680,6 +680,7 @@ export const values = {
 
 export const seconds = {
   fiveMinutes: "300",
+  oneDay: "86400",
   oneWeek: "604800",
   oneMonth: "2592000",
   oneYear: "31536000",
